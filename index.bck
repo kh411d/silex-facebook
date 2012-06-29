@@ -1,0 +1,99 @@
+<?php
+
+require_once __DIR__.'/../vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
+$app = new Silex\Application();
+
+$app['debug'] = true;
+
+function dg($r){
+ echo "<pre>";
+ print_r($r);
+ echo "</pre>";
+}
+
+dg($app);
+
+$app->get('/hello', function() {
+   echo "<form method='post' action='/feedback'>";
+   echo "<input type='text' name='message' id='message'/>";
+   echo "<input type='submit' value='submit'/>";
+    return 'Hello!';
+});
+
+$blogPosts = array(
+    1 => array(
+        'date'      => '2011-03-29',
+        'author'    => 'igorw',
+        'title'     => 'Using Silex',
+        'body'      => '...',
+    ),
+);
+
+$app->get('/blog', function () use ($blogPosts) {
+    $output = '';
+    foreach ($blogPosts as $post) {
+        $output .= $post['title'];
+        $output .= '<br />';
+    }
+
+    return $output;
+});
+
+$app->get('/blog/show/{id}', function (Silex\Application $app, $id) use ($blogPosts) {
+    if (!isset($blogPosts[$id])) {
+        $app->abort(404, "Post $id does not exist.");
+    }
+
+    $post = $blogPosts[$id];
+
+    return  "<h1>{$post['title']}</h1>".
+            "<p>{$post['body']}</p>";
+})->assert('id', '\d+');
+
+$app->post('/feedback', function (Request $request) {
+    $message = $request->get('message');
+	dg($message);
+    //mail('feedback@yoursite.com', '[YourSite] Feedback', $message);
+
+    return new Response('Thank you for your feedback!', 201);
+});
+
+Class User{
+  protected $id;
+  public function __construct($id){
+    $this->id = $id;
+  }
+}
+
+$userProvider = function ($id) {
+    return new User($id);
+};
+
+$app->get('/user/{user}', function (User $user) {
+    // ...
+	dg($user);
+})->convert('user', $userProvider);
+
+$app->get('/user/{user}/edit', function (User $user) {
+    // ...
+})->convert('user', $userProvider);
+
+
+
+/* $callback = function ($post, Request $request) {
+    return new Post($request->attributes->get('slug'));
+};
+
+$app->get('/blog/{id}/{slug}', function (Post $post) {
+    // ...
+})->convert('post', $callback); */
+
+
+
+
+
+$app->run();
