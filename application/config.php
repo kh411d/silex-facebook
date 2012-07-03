@@ -10,8 +10,8 @@ $app['db.config.password']  = '';
 $app['debug'] = true;
 
 //Facebook
-$app['facebook.app_id'] = '283749234';
-$app['facebook.secret'] = 'asdfh02fh029h3092h30f92hf';
+$app['facebook.app_id'] = '319158791508303';
+$app['facebook.secret'] = '1babbcac1b0097cf4cfba191e969b91d';
 
 // Cache
 $app['cache.path'] = __DIR__ . '/../cache';

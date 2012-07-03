@@ -3,7 +3,7 @@
         "name": "pimple/pimple",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
-        "time": "2012-06-21 13:34:38",
+        "time": "2012-06-21 11:34:38",
         "source": {
             "type": "git",
             "url": "git://github.com/fabpot/Pimple.git",
@@ -52,7 +52,7 @@
         "name": "twig/twig",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
-        "time": "2012-06-17 18:52:23",
+        "time": "2012-06-17 16:52:23",
         "source": {
             "type": "git",
             "url": "git://github.com/fabpot/Twig.git",
@@ -106,7 +106,7 @@
         "name": "doctrine/common",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
-        "time": "2012-06-18 14:14:07",
+        "time": "2012-06-18 12:14:07",
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/common",
@@ -183,7 +183,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Routing",
-        "time": "2012-06-18 08:32:28",
+        "time": "2012-06-18 06:32:28",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Routing",
@@ -246,7 +246,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/HttpFoundation",
-        "time": "2012-06-20 19:33:33",
+        "time": "2012-06-20 17:33:33",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/HttpFoundation",
@@ -299,7 +299,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/EventDispatcher",
-        "time": "2012-05-26 07:48:33",
+        "time": "2012-05-26 05:48:33",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/EventDispatcher",
@@ -358,7 +358,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/HttpKernel",
-        "time": "2012-06-21 13:32:16",
+        "time": "2012-06-21 11:32:16",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/HttpKernel",
@@ -429,7 +429,7 @@
         "name": "silex/silex",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
-        "time": "2012-06-19 14:48:24",
+        "time": "2012-06-19 12:48:24",
         "source": {
             "type": "git",
             "url": "git://github.com/fabpot/Silex.git",
@@ -512,7 +512,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Bridge/Twig",
-        "time": "2012-06-10 19:51:29",
+        "time": "2012-06-10 17:51:29",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/TwigBridge",
@@ -580,7 +580,7 @@
         "name": "monolog/monolog",
         "version": "1.1.0",
         "version_normalized": "1.1.0.0",
-        "time": "2012-04-23 16:27:40",
+        "time": "2012-04-23 14:27:40",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
@@ -631,7 +631,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Bridge/Monolog",
-        "time": "2012-05-18 17:04:58",
+        "time": "2012-05-18 15:04:58",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/MonologBridge",
@@ -685,7 +685,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Validator",
-        "time": "2012-06-20 09:43:04",
+        "time": "2012-06-20 07:43:04",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Validator",
@@ -747,7 +747,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Translation",
-        "time": "2012-05-21 20:27:15",
+        "time": "2012-05-21 18:27:15",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Translation",
@@ -807,7 +807,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Serializer",
-        "time": "2012-06-12 12:23:19",
+        "time": "2012-06-12 10:23:19",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Serializer",
@@ -859,7 +859,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Security",
-        "time": "2012-06-20 19:33:33",
+        "time": "2012-06-20 17:33:33",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Security",
@@ -929,7 +929,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Process",
-        "time": "2012-05-24 17:53:48",
+        "time": "2012-05-24 15:53:48",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Process",
@@ -981,7 +981,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/OptionsResolver",
-        "time": "2012-06-12 12:23:19",
+        "time": "2012-06-12 10:23:19",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/OptionsResolver",
@@ -1038,7 +1038,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Locale",
-        "time": "2012-05-31 03:04:03",
+        "time": "2012-05-31 01:04:03",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Locale",
@@ -1093,7 +1093,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Form",
-        "time": "2012-06-20 19:33:33",
+        "time": "2012-06-20 17:33:33",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Form",
@@ -1156,7 +1156,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Finder",
-        "time": "2012-06-19 15:16:22",
+        "time": "2012-06-19 13:16:22",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Finder",
@@ -1208,7 +1208,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Filesystem",
-        "time": "2012-06-19 07:53:15",
+        "time": "2012-06-19 05:53:15",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Filesystem",
@@ -1260,7 +1260,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/CssSelector",
-        "time": "2012-05-20 16:16:37",
+        "time": "2012-05-20 14:16:37",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/CssSelector",
@@ -1312,7 +1312,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/Console",
-        "time": "2012-06-18 22:10:56",
+        "time": "2012-06-18 20:10:56",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Console",
@@ -1364,7 +1364,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/DomCrawler",
-        "time": "2012-05-21 20:27:15",
+        "time": "2012-05-21 18:27:15",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/DomCrawler",
@@ -1422,7 +1422,7 @@
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "target-dir": "Symfony/Component/BrowserKit",
-        "time": "2012-05-18 11:08:19",
+        "time": "2012-05-18 09:08:19",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/BrowserKit",
@@ -1481,7 +1481,7 @@
         "name": "doctrine/dbal",
         "version": "2.1.x-dev",
         "version_normalized": "2.1.9999999.9999999-dev",
-        "time": "2012-05-27 19:17:18",
+        "time": "2012-05-27 17:17:18",
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/dbal",
@@ -1546,7 +1546,7 @@
         "name": "swiftmailer/swiftmailer",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
-        "time": "2012-06-21 10:46:20",
+        "time": "2012-06-21 08:46:20",
         "source": {
             "type": "git",
             "url": "git://github.com/swiftmailer/swiftmailer.git",
@@ -1594,6 +1594,52 @@
         "autoload": {
             "files": [
                 "lib/swift_required.php"
+            ]
+        }
+    },
+    {
+        "name": "facebook/php-sdk",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "time": "2012-07-02 18:59:33",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/facebook/facebook-php-sdk.git",
+            "reference": "8884b72db7b328090ed2e84075593dcdf42d04b7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/facebook/facebook-php-sdk/zipball/8884b72db7b328090ed2e84075593dcdf42d04b7",
+            "reference": "8884b72db7b328090ed2e84075593dcdf42d04b7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0",
+            "ext-curl": "*",
+            "ext-json": "*"
+        },
+        "type": "library",
+        "installation-source": "source",
+        "license": [
+            "Apache2"
+        ],
+        "authors": [
+            {
+                "name": "Facebook",
+                "email": null,
+                "homepage": "https://github.com/facebook/facebook-php-sdk/contributors",
+                "role": null
+            }
+        ],
+        "description": "Facebook PHP SDK",
+        "homepage": "https://github.com/facebook/facebook-php-sdk",
+        "keywords": [
+            "facebook",
+            "sdk"
+        ],
+        "autoload": {
+            "classmap": [
+                "src"
             ]
         }
     }
