@@ -5,8 +5,6 @@ if (!class_exists('Composer\\Autoload\\ClassLoader', false)) {
     require __DIR__ . '/composer' . '/ClassLoader.php';
 }
 
-require __DIR__ . '/swiftmailer/swiftmailer/lib/swift_required.php';
-
 return call_user_func(function() {
     $loader = new \Composer\Autoload\ClassLoader();
     $composerDir = __DIR__ . '/composer';
@@ -22,6 +20,8 @@ return call_user_func(function() {
     }
 
     $loader->register();
+
+    require __DIR__ . '/swiftmailer/swiftmailer/lib/swift_required.php';
 
     return $loader;
 });

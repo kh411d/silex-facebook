@@ -21,5 +21,10 @@
         "doctrine/dbal": "2.1.*",
         "swiftmailer/swiftmailer": "4.1.*",
 		"facebook/php-sdk": "dev-master"
+    },
+	"autoload": {
+        "psr-0": {
+            "Acme": "src/"
+        }
     }
 }

@@ -33,4 +33,5 @@ return array(
     'Monolog' => $vendorDir . '/monolog/monolog/src/',
     'Doctrine\\DBAL' => $vendorDir . '/doctrine/dbal/lib/',
     'Doctrine\\Common' => $vendorDir . '/doctrine/common/lib/',
+    'Acme' => $baseDir . '/src/',
 );

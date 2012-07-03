@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/src/lib/facebook.php';
+//require_once __DIR__.'/src/lib/facebook.php';
 
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
@@ -19,10 +19,8 @@ $app = new Silex\Application();
 $app['debug'] = true;
 
 /* Include ThirdParty Provider */
-require_once __DIR__.'/src/Acme/Provider/FacebookServiceProvider.php'; 
-    
-//$app['autoloader']->registerNamespace('Acme\\Provider\\Facebook', __DIR__.'/src');
-use Acme\Provider\FacebookServiceProvider;
+use Acme\Provider\Service\FacebookServiceProvider;
+use Acme\Provider\Service\ModelServiceProvider;
 
 
 require __DIR__ . '/application/config.php';
@@ -51,8 +49,10 @@ $app->register(new DoctrineServiceProvider(), array(
 
 /* Register ThirdParty Provider */
 $app->register(new FacebookServiceProvider());
-
-
+/* Register Model */
+$app->register(new ModelServiceProvider(), array('model.models' => array(
+    'customer'      => 'Acme\\Model\\Customer'
+)));
 
 $app->before(function() use ($app) {
     $app['session']->start();
