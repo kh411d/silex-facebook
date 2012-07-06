@@ -1,0 +1,21 @@
+{% set active = 'dashboard_campaign' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Campaign</h1>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="{{ path('dashboard_campaign_addedit') }}">Add Campaign</a></li>
+    </ul>
+  </div>
+</div>
+
+	<div class="row">
+	<div class="span12">
+{{ form_widget(form) }}
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

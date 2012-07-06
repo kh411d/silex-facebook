@@ -1,25 +1,27 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 
+
+$includePath = __DIR__.'src/Acme/lib/PEAR'. PATH_SEPARATOR . __DIR__.'src/Acme/lib';
+set_include_path($includePath); 
+
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpCacheServiceProvider;
 use Silex\Provider\SessionServiceProvider;
-//use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormError;
 
 $app = new Silex\Application();
 $app['debug'] = true;
 
-/* Include ThirdParty Provider */
-use Acme\Provider\Service\FacebookServiceProvider;
-use Acme\Provider\Service\ModelServiceProvider;
+
 
 
 require __DIR__ . '/application/config.php';
@@ -30,11 +32,15 @@ $app->register(new ValidatorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 
-/* $app->register(new TwigServiceProvider(), array(
+$app->register(new TranslationServiceProvider(), array(
+      'translator.messages' => array(),
+	  'translator.domains' => array()
+)) ;
+
+ $app->register(new TwigServiceProvider(), array(
     'twig.options'          => array('cache' => false, 'strict_variables' => true),
-    'twig.form.templates'   => array('form_div_layout.html.twig', 'common/form_div_layout.html.twig'),
-    'twig.path'             => array(__DIR__ . '/../views')
-)); */
+  'twig.path'             => array(__DIR__ . '/views')
+)); 
 
 $app->register(new DoctrineServiceProvider(), array(
     'db.options'    => array(
@@ -47,17 +53,33 @@ $app->register(new DoctrineServiceProvider(), array(
 ));
 
 /* Register ThirdParty Provider */
+use Acme\Provider\Service\FacebookServiceProvider;
 $app->register(new FacebookServiceProvider());
+
 /* Register Model */
+use Acme\Provider\Service\ModelServiceProvider;
 $app->register(new ModelServiceProvider(), array('model.models' => array(
     'customer'      => 'Acme\\Model\\Customer'
 )));
+
+/* Register Model */
+use Acme\Provider\Service\HelperServiceProvider;
+$app->register(new HelperServiceProvider(), array('helper.helpers' => array(
+    'facebook'      => 'Acme\\Helper\\Facebook'
+)));
+
+//use Acme\Provider\Service\EpiTemplateServiceProvider;
+//$app->register(new EpiTemplateServiceProvider());
+
+/* Register Controller */
+$app->mount('/home', new Acme\Provider\Controller\HomeControllerProvider());
+$app->mount('/dashboard', new Acme\Provider\Controller\DashboardControllerProvider());
 
 $app->before(function() use ($app) {
     $app['session']->start();
 });
 
-require __DIR__ . '/application/controller.php';
+//require __DIR__ . '/application/controller.php';
 
 if ($app['debug']) {
     return $app->run();

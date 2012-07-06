@@ -1,0 +1,37 @@
+{% set active = 'dashboard_campaign' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Campaign</h1>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="{{ path('dashboard_campaign_addedit') }}">Add Campaign</a></li>
+    </ul>
+  </div>
+</div>
+
+	<div class="row">
+	<div class="span12">
+	<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Title</th>
+		<th>StartDate</th>
+		<th>EndDate</th>
+		<th>Status</th>
+	</tr>
+	<tr>
+	  <td>1</td>
+	  <td>asdfas</td>
+	  <td>235423</td>
+	  <td>2342</td>
+	  <td>sdfgsdfgsdf</td>
+	</tr>
+	
+	</table>
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

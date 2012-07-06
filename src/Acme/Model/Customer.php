@@ -2,21 +2,138 @@
 namespace Acme\Model;
 use Doctrine\DBAL\Connection;
 
- Class Customer {
-	public $db;
+Class Customer {
+
+  private $db;
 	
 	public function __construct(Connection $db){
 	
 		$this->db = $db;
 	
 	}
-	
-	public function get_all(){
-	
-		$sql = "SELECT * FROM slx_customer_fbrel";
-		$post = $this->db->fetchAssoc($sql);
-		return $post;
-		
+  
+
+  public function add($data)
+  {
+	try{
+		$this->db->beginTransaction();
+		$sql = "INSERT INTO slx_customer_profile (`name`,`email`,`phone`,`address`) VALUES ('{$data['name']}','{$data['email']}','{$data['phone']}','{$data['address']}')";
+		$sth = $this->db->prepare($sql);
+		$sth->execute($data);
+		if($customer_id = $this->dbh->lastInsertId()){
+			$sql = "INSERT INTO slx_customer_fbrel (`customer_id`,`fb_uid`) VALUES ($customer_id,{$data['fb_uid']})";
+			$sth = $this->db->prepare($sql);
+			$sth->execute($data);			
+			if(!$result = $this->db->commit()){
+				throw New Exception('Something went wrong!');
+			}
+			return true;
+		}else{
+			throw New Exception('Something went wrong!');
+		}
+	} catch (Exception $e) {
+		$this->db->rollback();
+		return false;
 	}
- 
- }
+  }
+  
+  public function addCampaign($data)
+  {
+	return $this->db->insert('slx_customer_campaigns',$data);
+  }
+  
+  public function isRegistered($fb_uid)
+  {
+   $sql  = "SELECT slx_customer_fbrel.customer_id ";
+   $sql .= "FROM slx_customer_profile ";
+   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+   $sql .= "WHERE slx_customer_fbrel.fb_uid = ?";
+   $customer_id = $conn->fetchColumn($sql, $fb_uid, 0);
+	return $customer_id;
+   }
+  
+  public function update($data)
+  {
+	$ok = $this->db->update('slx_customer_profile',$data,array('customer_id'=>$data['customer_id']));
+	
+	if($ok){
+	 $gid = $data['customer_id'];
+     return $gid;
+	}else{
+		return false;
+	}
+  }
+  
+  
+
+  
+  public function remove($gid)
+  {
+	try{
+		$this->db->beginTransaction();
+		$sth = $this->db->prepare("DELETE slx_customer_profile WHERE customer_id = $gid");
+		$sth->execute($data);
+		$sth = $this->db->prepare("DELETE slx_customer_fbrel WHERE customer_id = $gid");
+		$sth->execute($data);		
+		if(!$result = $this->db->commit()){
+				throw New Exception('Something went wrong!');
+		}
+		return true;	
+	} catch (Exception $e) {
+	    $this->db->rollback();
+		return false;
+	}
+  }
+  
+  public function retrieve($clauses = array() , $args = array())
+	{
+	   if(!is_array($args))
+		  $args = array($args);
+
+	if(!is_array($clauses))
+	 parse_str($clauses,$clauses);
+
+	$defaults = array('orderby' => 'slx_customer_profile.customer_id', 'order' => 'DESC', 'fields' => '*');
+	$args = array_merge( $defaults, $args );
+	extract($args, EXTR_SKIP);
+	$order = ( 'desc' == strtolower($order) ) ? 'DESC' : 'ASC';
+    
+	$sql = "SELECT ";
+	$sql .= $fields." ";
+	$sql .= "FROM slx_customer_profile ";
+	$sql .= "INNER JOIN slx_customer_facebook ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+
+		foreach ($clauses as $key => $value){
+		  if(is_array($value) && count($value)==1){
+		   $where[] = $key." ".key($value)." ".current($value);
+		  }else{
+		   $where[] = $key." = ".$value;
+		  }
+		}
+		
+		if(isset($where) && count($where)>0)
+			$sql .= " WHERE ".implode(" AND ",$where);
+		
+		$sql .= " ORDER BY ".$orderby." ".$order;
+
+		if(@$limit_number && @$limit_offset)
+			$sql .= " LIMIT ".$limit_offset.",".$limit_number;
+		elseif(@$limit_number)
+			$sql .= " LIMIT ".$limit_number;
+  
+	  return $this->db->fetchAll($sql);
+
+	}
+  
+  public function getById($gid) 
+  {
+   $sql  = "SELECT slx_customer_profile.*,slx_customer_fbrel.fb_uid ";
+   $sql .= "FROM slx_customer_profile ";
+   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+   $sql .= "WHERE slx_customer_profile.customer_id = ".$gid;
+   return $this->db->fetchAssoc($sql);
+  }
+  
+  
+
+}

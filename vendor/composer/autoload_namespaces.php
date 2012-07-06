@@ -24,6 +24,7 @@ return array(
     'Symfony\\Component\\DomCrawler' => $vendorDir . '/symfony/dom-crawler/',
     'Symfony\\Component\\CssSelector' => $vendorDir . '/symfony/css-selector/',
     'Symfony\\Component\\Console' => $vendorDir . '/symfony/console/',
+    'Symfony\\Component\\Config' => $vendorDir . '/symfony/config/',
     'Symfony\\Component\\BrowserKit' => $vendorDir . '/symfony/browser-kit/',
     'Symfony\\Bridge\\Twig' => $vendorDir . '/symfony/twig-bridge/',
     'Symfony\\Bridge\\Monolog' => $vendorDir . '/symfony/monolog-bridge/',
