@@ -10,25 +10,37 @@
     </ul>
   </div>
 </div>
-
 	<div class="row">
 	<div class="span12">
 	<table class="table">
 	<tr>
 		<th>#</th>
-		<th>Title</th>
-		<th>StartDate</th>
-		<th>EndDate</th>
-		<th>Status</th>
+		<th>Summary</th>
+		<th>Action</th>
 	</tr>
+	{% set counter = 0 %}
+	{% for item in data %}
+	{% set counter = counter + 1 %}
 	<tr>
-	  <td>1</td>
-	  <td>asdfas</td>
-	  <td>235423</td>
-	  <td>2342</td>
-	  <td>sdfgsdfgsdf</td>
+	  <td>{{ counter }}
+	  </td>
+	  <td>
+	  {{ item.title }}<br>
+	  On: {{ item.startdate|date("F jS g:ia") }} <br>
+	  Sub: {{ item.upload_enddate|date("F jS g:ia") }} <br>
+	  Sel: {{ item.selectiondate|date("F jS g:ia") }} <br>
+	  Off: {{ item.enddate|date("F jS g:ia") }}
+	  </td>
+	  <td>
+	  <a class="btn" href="{{ path('dashboard_campaign_addedit') }}?edit={{ item.campaign_id }}">Edit</a>
+	  &nbsp;
+	  <a class="btn" href="{{ path('dashboard_campaign_home') }}?{% if (item.status == 'pending') %}activate{% else %}postpone{% endif %}={{ item.campaign_id }}">{% if (item.status == 'pending') %} Activate {% else %} Postpone {% endif %}</a>	  
+	  </td>
 	</tr>
-	
+	{% endfor %}
+	<tr>
+	<td colspan="3" style="text-align:center;">{{ paginate | raw }}</td>
+	</tr>
 	</table>
 	</div>
 	</div>

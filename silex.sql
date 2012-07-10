@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: silex
 Target Host: localhost
 Target Database: silex
-Date: 7/6/2012 10:52:16 PM
+Date: 7/10/2012 3:54:39 PM
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `slx_campaigns` (
   `selectiondate` datetime NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`campaign_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for slx_customer_campaigns
@@ -124,5 +124,9 @@ CREATE TABLE `slx_pages` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `slx_campaigns` VALUES ('1', 'Campaign uji coba', '2012-07-10 00:00:00', '2012-08-16 00:00:00', '2012-10-01 00:00:00', '2012-12-04 08:00:00', 'active');
+INSERT INTO `slx_campaigns` VALUES ('2', 'testset', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', 'pending');
+INSERT INTO `slx_campaigns` VALUES ('3', 'asdfasdaf', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', 'pending');
+INSERT INTO `slx_campaigns` VALUES ('4', 'test lagi deh ed', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', 'pending');
 INSERT INTO `slx_customer_fbrel` VALUES ('1', '730189516');
 INSERT INTO `slx_facebook_auth` VALUES ('730189516', 'aldhflaksdjflskjdfhklasdbjf');

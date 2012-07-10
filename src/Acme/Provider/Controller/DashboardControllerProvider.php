@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormError;
 
+
+
 class DashboardControllerProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
@@ -25,142 +27,113 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		
 		/* Campaign Index */
 		
-		$controllers->match('/campaign/', function(Request $request) use ($app) {
-		    /*  $campaign = $app['campaign'];
+		$controllers->match('/campaign', function(Request $request) use ($app) {
+		     $campaign = $app['campaign'];
 			//Action
-			if(isset($_POST['action']) && $act = addslashes($_POST['action'])){
-			 $cid = @$_POST['cid'];
-			 switch($act){
-			   case "activate":
-				  if(@$cid)
-				   foreach($cid as $v)
-				   $campaign->setStatus($v,'active');
-			   break;
-			   case "deactivate":
-				 if(@$cid)
-				   foreach($cid as $v)
-				   $campaign->setStatus($v,'inactive');
-			   break;
-			 }
+			if($cid = $app['request']->query->get('activate')){
+				$campaign->setStatus($cid,'active');
+			}elseif($cid = $app['request']->query->get('postpone')){
+				$campaign->setStatus($cid,'pending');
 			}
 			
 			//Filter
 			$filter = array();
 			$filter_vars = array();
-			if(($filter_key = addslashes(@$_REQUEST['filter_key'])) &&  ($filter_value = addslashes(@$_REQUEST['filter_value']))){
-			  switch($filter_key){
-				case "title": $filter['title'] = array("LIKE" => "'%$filter_value%'"); break;
-				case "onDate": $filter['startdate'] = array("<=" => "'$filter_value'");
-							   $filter['endate'] = array(">=" => "'$filter_value'");
-							   break;
-				case "status": $filter['status'] = "'$filter_value'"; break;
-			  }
-
-			  $filter_vars = array('filter_key'=>@$_REQUEST['filter_key'],
-									'filter_value'=>@$_REQUEST['filter_value']);
-			}
+		
 			
 			//Pagination Setup
 			 list($t) = $campaign->retrieve($filter,array('fields'=>'count(*) as total_items'));
 			 $total_items = $t['total_items'];
 			
-			 $perPage = 10;   
-			 extract(pagination($total_items,$perPage,$filter_vars));	
-			
+			 $perPage = 2;   
+			 $path = $app['url_generator']->generate('dashboard_campaign_home');
+			 extract(\pagination($total_items,$perPage,$filter_vars,$path));	
+
 			//Set Params
-			 $params['filter_key'] = @$_REQUEST['filter_key'];
-			 $params['filter_value'] = @$_REQUEST['filter_value'];
 			 $params['paginate'] = $paginate_links; 
 			 $params['offset'] = $offset;
 			 $params['data'] = $campaign->retrieve($filter,array('limit_number'=>$perPage,'limit_offset'=>$offset));
-		 */
-		  return $app['twig']->render('/dashboard/campaign_index.html');
+		   
+		  return $app['twig']->render('/dashboard/campaign_index.html',$params);
 	
 		})->method('GET|POST')
 		  ->bind('dashboard_campaign_home');  
 		  
-		/********************/
+
+
 		$controllers->match('/campaign/addedit', function(Request $request) use ($app) {
-		   $builder = $app['form.factory']->createBuilder('form');
-			$choices = array('choice a', 'choice b', 'choice c');
-
+			$campaign = $app['campaign'];	
+         $action = $app['request']->query->get('edit') ? 'edit' : 'add';
+		 
+		 if($action == 'edit'){
+		  $db = $campaign->getById($app['request']->query->get('edit')); 
+		  $data_default['campaign_id'] = $db['campaign_id'];
+		  $data_default['action'] = $action;
+		  $data_default['title'] = $db['title'];
+		  $data_default['startdate_input'] = new \DateTime($db['startdate']);
+		  $data_default['upload_enddate_input'] = new \DateTime($db['upload_enddate']);
+		  $data_default['selectiondate_input'] = new \DateTime($db['selectiondate']);
+		  $data_default['enddate_input'] = new \DateTime($db['enddate']);
+		  $data_default['status'] = $db['status'];
+		 }else{
+		  $data_default = array('action'=>$action);	
+		 }
+		 
+		 $builder = $app['form.factory']->createBuilder('form',$data_default);
 			$form = $builder
-				->add(
-					$builder->create('sub-form', 'form')
-						->add('subformemail1', 'email', array(
-							'constraints' => array(new Assert\NotBlank(), new Assert\Email()),
-							'attr'        => array('placeholder' => 'email constraints')
+					->add('action','hidden')
+					->add('campaign_id','hidden')
+					->add('title', 'text', array(
+						'constraints' => new Assert\NotBlank(),
+						'attr'        => array('placeholder' => 'not blank constraints'),
+						'label'		  => 'Title'
+					))
+					->add('startdate_input', 'datetime',array('label' => 'Start Date'))
+					->add('upload_enddate_input', 'datetime',array('label' => 'Submit End Date'))
+					->add('selectiondate_input', 'datetime',array('label' => 'Selection Date'))
+					->add('enddate_input', 'datetime',array('label' => 'End Date'))
+					->add('status', 'choice',  array(
+						'choices'  => array('pending'=>'pending','active'=>'active')
 						))
-						->add('subformtext1', 'text')
-				)
-				->add('text1', 'text', array(
-					'constraints' => new Assert\NotBlank(),
-					'attr'        => array('placeholder' => 'not blank constraints')
-				))
-				->add('text2', 'text', array('attr' => array('class' => 'span1', 'placeholder' => '.span1')))
-				->add('text3', 'text', array('attr' => array('class' => 'span2', 'placeholder' => '.span2')))
-				->add('text4', 'text', array('attr' => array('class' => 'span3', 'placeholder' => '.span3')))
-				->add('text5', 'text', array('attr' => array('class' => 'span4', 'placeholder' => '.span4')))
-				->add('text6', 'text', array('attr' => array('class' => 'span5', 'placeholder' => '.span5')))
-				->add('text8', 'text', array('disabled' => true, 'attr' => array('placeholder' => 'disabled field')))
-				->add('textarea', 'textarea')
-				->add('email', 'email')
-				->add('integer', 'integer')
-				->add('money', 'money')
-				->add('number', 'number')
-				->add('password', 'password')
-				->add('percent', 'percent')
-				->add('search', 'search')
-				->add('url', 'url')
-				->add('choice1', 'choice',  array(
-					'choices'  => $choices,
-					'multiple' => true,
-					'expanded' => true
-				))
-				->add('choice2', 'choice',  array(
-					'choices'  => $choices,
-					'multiple' => false,
-					'expanded' => true
-				))
-				->add('choice3', 'choice',  array(
-					'choices'  => $choices,
-					'multiple' => true,
-					'expanded' => false
-				))
-				->add('choice4', 'choice',  array(
-					'choices'  => $choices,
-					'multiple' => false,
-					'expanded' => false
-				))
-				->add('datetime', 'datetime')
-				->add('time', 'time')
-				->add('birthday', 'birthday')
-				->add('checkbox', 'checkbox')
-				->add('file', 'file')
-				->add('radio', 'radio')
-				->add('password_repeated', 'repeated', array(
-					'type'            => 'password',
-					'invalid_message' => 'The password fields must match.',
-					'options'         => array('required' => true),
-					'first_options'   => array('label' => 'Password'),
-					'second_options'  => array('label' => 'Repeat Password'),
-				))
-				->getForm()
-			;
-
+					->getForm();
+				
+				
 			if ('POST' === $app['request']->getMethod()) {
 				$form->bindRequest($app['request']);
 				if ($form->isValid()) {
-					$app['session']->setFlash('success', 'The form is valid');
+					 $values = $form->getData();
+					 $dbdata['title'] = $values['title'];
+					 $dbdata['startdate'] = $values['startdate_input']->format('Y-m-d H:i:s');
+					 $dbdata['upload_enddate'] = $values['upload_enddate_input']->format('Y-m-d H:i:s');
+					 $dbdata['selectiondate'] = $values['selectiondate_input']->format('Y-m-d H:i:s');
+					 $dbdata['enddate'] = $values['enddate_input']->format('Y-m-d H:i:s');
+					 $dbdata['status'] = $values['status'];
+					 if($values['action'] == 'edit'){
+						$dbdata['campaign_id'] = $values['campaign_id'];
+						$resultID = $campaign->update($dbdata);
+					 }else{
+						$resultID = $campaign->add($dbdata);
+					 }
+					  $app['session']->setFlash('success', 'Submission Succeed');
+					return $app->redirect($app['url_generator']->generate('dashboard_campaign_addedit_success',array('id'=>$resultID)));
 				} else {
 					$form->addError(new FormError('This is a global error'));
-					$app['session']->setFlash('info', 'The form is bind, but not valid');
+					 $app['session']->setFlash('success', 'Submission Failed');
 				}
-			}
+			} 
 			 return $app['twig']->render('/dashboard/campaign_addedit.html',array('form'=>$form->createView()));
 		})->method('GET|POST')
 		  ->bind('dashboard_campaign_addedit');  
 		/********************/
+		
+		$controllers->match('/campaign/addedit/success/{id}', function(Request $request,$id) use ($app) {
+		    
+			return $app['twig']->render('/dashboard/addedit_success.html',array('addURL' => $app['url_generator']->generate('dashboard_campaign_addedit'),
+																				'editURL' => $app['url_generator']->generate('dashboard_campaign_addedit')."?edit=$id"));
+		
+		})->method('GET|POST')
+		  ->bind('dashboard_campaign_addedit_success')->value('id', null);  
+		
 
         return $controllers;
     }

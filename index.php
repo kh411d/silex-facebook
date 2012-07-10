@@ -2,7 +2,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 
-$includePath = __DIR__.'src/Acme/lib/PEAR'. PATH_SEPARATOR . __DIR__.'src/Acme/lib';
+$includePath = __DIR__.'/src/Acme/lib/PEAR'. PATH_SEPARATOR . __DIR__.'/src/Acme/lib';
 set_include_path($includePath); 
 
 use Silex\Provider\DoctrineServiceProvider;
@@ -21,6 +21,20 @@ use Symfony\Component\Form\FormError;
 $app = new Silex\Application();
 $app['debug'] = true;
 
+	function pagination($total_items,$perPage,array $extraVars = array(),$path = '',$urlVar = 'pageID')
+	{
+		//Pagination Setup
+		require_once "Pager/Sliding.php";
+		$pager = new \pager_sliding(array('totalItems'=>$total_items,
+										 'perPage'=>$perPage,
+										 'urlVar'=>$urlVar,
+										 'extraVars'=>$extraVars,
+										 'path'=>$path));
+		list($offset,) = $pager->getOffsetByPageId();	
+		--$offset; //Need to Decrement
+		$links = $pager->getLinks(@$_REQUEST[$urlVar]);	
+		return array('offset'=>$offset,'paginate_links'=>$links['all'],'paginate_data'=>$links);
+	}
 
 
 
@@ -59,7 +73,9 @@ $app->register(new FacebookServiceProvider());
 /* Register Model */
 use Acme\Provider\Service\ModelServiceProvider;
 $app->register(new ModelServiceProvider(), array('model.models' => array(
-    'customer'      => 'Acme\\Model\\Customer'
+    'customer'      => 'Acme\\Model\\Customer',
+	'customeritem'      => 'Acme\\Model\\CustomerItem',
+	'campaign'      => 'Acme\\Model\\Campaign'	
 )));
 
 /* Register Model */

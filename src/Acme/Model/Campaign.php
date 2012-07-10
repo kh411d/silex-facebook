@@ -15,7 +15,7 @@ Class Campaign {
   
   public function current()
   {
-   $sql = "SELECT * FROM slx_campaign 
+   $sql = "SELECT * FROM slx_campaigns 
 		   WHERE 
 			  status = 'active' 
 			  AND 
@@ -29,10 +29,10 @@ Class Campaign {
 
   public function add($data)
   {
-	$ok = $this->db->insert('slx_campaign',$data);
+	$ok = $this->db->insert('slx_campaigns',$data);
 	
 	if($ok){
-		return $ok;
+		return 	$this->db->lastInsertId();
 	}else{
 		return false;
 	}
@@ -40,7 +40,7 @@ Class Campaign {
   
   public function update($data)
   {
-	$ok = $this->db->update('slx_campaign',$data,array('campaign_id'=>$data['campaign_id']));
+	$ok = $this->db->update('slx_campaigns',$data,array('campaign_id'=>$data['campaign_id']));
 	
 	if($ok){
 	 $gid = $data['campaign_id'];
@@ -55,7 +55,7 @@ Class Campaign {
   
   public function remove($gid)
   {
-		return $this->db->delete('slx_campaign', array('campaign_id' => $gid));
+		return $this->db->delete('slx_campaigns', array('campaign_id' => $gid));
   }
   
   public function retrieve($clauses = array() , $args = array())
@@ -66,14 +66,14 @@ Class Campaign {
 	if(!is_array($clauses))
 	 parse_str($clauses,$clauses);
 
-	$defaults = array('orderby' => 'GID', 'order' => 'DESC', 'fields' => '*');
+	$defaults = array('orderby' => 'campaign_id', 'order' => 'DESC', 'fields' => '*');
 	$args = array_merge( $defaults, $args );
 	extract($args, EXTR_SKIP);
 	$order = ( 'desc' == strtolower($order) ) ? 'DESC' : 'ASC';
     
 	$sql = "SELECT ";
 	$sql .= $fields." ";
-	$sql .= "FROM slx_campaign ";
+	$sql .= "FROM slx_campaigns ";
 
 		foreach ($clauses as $key => $value){
 		  if(is_array($value) && count($value)==1){
@@ -99,14 +99,14 @@ Class Campaign {
   
   public function getById($gid) 
   {
-   $sql  = "SELECT slx_campaign.* ";
-   $sql .= "FROM slx_campaign ";
-   $sql .= "WHERE slx_campaign.campaign_id = ".$gid;
+   $sql  = "SELECT slx_campaigns.* ";
+   $sql .= "FROM slx_campaigns ";
+   $sql .= "WHERE slx_campaigns.campaign_id = ".$gid;
    return $this->db->fetchAssoc($sql);
   }
   
   public function setStatus($gid,$status)
   {
-   return $this->db->update('slx_campaign', array('status'=>$status), array('campaign_id'=>$gid));
+   return $this->db->update('slx_campaigns', array('status'=>$status), array('campaign_id'=>$gid));
   }
 }
