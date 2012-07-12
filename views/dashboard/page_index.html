@@ -1,0 +1,47 @@
+{% set active = 'dashboard_page' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Pages</h1>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="{{ path('dashboard_page_addedit') }}">Add Page</a></li>
+    </ul>
+  </div>
+</div>
+	<div class="row">
+	<div class="span12">
+	<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Summary</th>
+		<th>Action</th>
+	</tr>
+	{% set counter = 0 %}
+	{% for item in data %}
+	{% set counter = counter + 1 %}
+	<tr>
+	  <td>{{ counter }}
+	  </td>
+	  <td>
+	  <b>{{ item.page_title }}</b><br>
+	  {{ item.page_body }}<br>
+	  On: {{ item.page_publish_date|date("F jS g:ia") }}
+	  </td>
+	  <td>
+	  <a class="btn" href="{{ path('dashboard_page_addedit') }}?edit={{ item.campaign_id }}">Edit</a>
+	  &nbsp;
+	  <a class="btn" href="{{ path('dashboard_page_home') }}?{% if (item.page_status == 'pending') %}publish{% else %}pending{% endif %}={{ item.campaign_id }}">{% if (item.page_status == 'pending') %} Publish {% else %} Postpone {% endif %}</a>	  
+	  </td>
+	</tr>
+	{% endfor %}
+	<tr>
+	<td colspan="3" style="text-align:center;">{{ paginate | raw }}</td>
+	</tr>
+	</table>
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

@@ -20,8 +20,8 @@
         {
             "package": "facebook/php-sdk",
             "version": "dev-master",
-            "source-reference": "8884b72db7b328090ed2e84075593dcdf42d04b7",
-            "commit-date": "1341255573"
+            "source-reference": "62ca8e9e6663863f69283b46a6df1f64cb84c4e2",
+            "commit-date": "1341890530"
         },
         {
             "package": "monolog/monolog",
@@ -86,8 +86,8 @@
         {
             "package": "symfony/config",
             "version": "dev-master",
-            "source-reference": "a261cb1571e1f3921a632541299a9f39753a62a7",
-            "commit-date": "1341329671"
+            "source-reference": "bb18f5131f785483d3750a771df594eed1e5f863",
+            "commit-date": "1341838460"
         },
         {
             "package": "symfony/console",

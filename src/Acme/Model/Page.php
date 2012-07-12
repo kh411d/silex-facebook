@@ -39,7 +39,7 @@ Class Page {
   
   public function remove($page_id)
   {
-	$deleted = $this->db->query("DELETE FROM slx_campaign_page WHERE page_id = ".$page_id);
+	$deleted = $this->db->delete("slx_campaign_page",array('page_id' => $page_id));
 	if($deleted){
 		return true;
 	}
@@ -54,14 +54,14 @@ Class Page {
 		if(!is_array($clauses))
 		 parse_str($clauses,$clauses);
 
-		$defaults = array('orderby' => 'page_id', 'order' => 'DESC', 'fields' => 'slx_campaign_page.*,campaign_group.title,campaign_group.APP_APPLICATION_ID');
+		$defaults = array('orderby' => 'page_id', 'order' => 'DESC', 'fields' => 'slx_campaign_page.*,slx_campaigns.title');
 		$args = array_merge( $defaults, $args );
 		extract($args, EXTR_SKIP);
 		$order = ( 'desc' == strtolower($order) ) ? 'DESC' : 'ASC';
 		
 		$sql = "SELECT ";
 		$sql .= $fields." ";
-		$sql .= "FROM slx_campaign_page INNER JOIN campaign_group ON slx_campaign_page.GID = campaign_group.GID ";
+		$sql .= "FROM slx_campaign_page INNER JOIN slx_campaigns ON slx_campaign_page.campaign_id = slx_campaigns.campaign_id ";
 
 		foreach ($clauses as $key => $value){
 		  if(is_array($value)){
@@ -81,7 +81,7 @@ Class Page {
 		elseif(isset($limit_number))
 			$sql .= " LIMIT ".$limit_number;
 
-	  return $this->db->get_results($sql,'ARRAY_A');
+	  return $this->db->fetchAll($sql);
 
 	}
   
@@ -90,7 +90,7 @@ Class Page {
    $sql  = "SELECT slx_campaign_page.* ";
    $sql .= "FROM slx_campaign_page ";
    $sql .= "WHERE slx_campaign_page.page_id = ".$page_id;
-   return $this->db->get_row($sql,'ARRAY_A');
+   return $this->db->fetchAssoc($sql,'ARRAY_A');
   }
   
   public function setStatus($page_id,$status)

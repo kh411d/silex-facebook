@@ -41,7 +41,8 @@
               <li {% if 'dashboard_campaign' == active %}class="active"{% endif %}><a href="{{ path('dashboard_campaign_home') }}">Campaign</a></li>
               <li {% if 'dashboard_customer' == active %}class="active"{% endif %}><a href="{{ path('dashboard_customer_home') }}">Customer</a></li>          
 			  <li {% if 'dashboard_customeritem' == active %}class="active"{% endif %}><a href="{{ path('dashboard_customeritem_home') }}">Customer Items</a></li>          
-			  
+			  <li {% if 'dashboard_page' == active %}class="active"{% endif %}><a href="{{ path('dashboard_page_home') }}">Page</a></li>          
+      
 			  <li><a href="#">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->

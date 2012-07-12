@@ -205,6 +205,40 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		})->method('GET|POST')
 		  ->bind('dashboard_page_addedit_success')->value('id', null);  		  
 
+		$controllers->match('/page', function(Request $request) use ($app) {
+		     $campaign = $app['campaign'];
+			 $page = $app['page'];
+			
+			//Action
+			if($cid = $app['request']->query->get('publish')){
+				$page->setStatus($cid,'publish');
+			}elseif($cid = $app['request']->query->get('pending')){
+				$page->setStatus($cid,'pending');
+			}
+			
+			//Filter
+			$filter = array();
+			$filter_vars = array();
+		
+			
+			//Pagination Setup
+			 list($t) = $page->retrieve($filter,array('fields'=>'count(*) as total_items'));
+			 $total_items = $t['total_items'];
+			
+			 $perPage = 2;   
+			 $path = $app['url_generator']->generate('dashboard_page_home');
+			 extract(\pagination($total_items,$perPage,$filter_vars,$path));	
+
+			//Set Params
+			 $params['paginate'] = $paginate_links; 
+			 $params['offset'] = $offset;
+			 $params['data'] = $page->retrieve($filter,array('limit_number'=>$perPage,'limit_offset'=>$offset));
+		   
+		  return $app['twig']->render('/dashboard/page_index.html',$params);
+	
+		})->method('GET|POST')
+		  ->bind('dashboard_page_home'); 
+
 		$controllers->match('/page/addedit', function(Request $request) use ($app) {
 			$campaign = $app['campaign'];
 			$page = $app['page'];
@@ -272,7 +306,19 @@ class DashboardControllerProvider implements ControllerProviderInterface
 			} 
 			 return $app['twig']->render('/dashboard/page_addedit.html',array('form'=>$form->createView()));
 		})->method('GET|POST')
-		  ->bind('dashboard_page_addedit');    
+		  ->bind('dashboard_page_addedit'); 
+
+
+		 
+
+		$controllers->match('/page/addedit/success/{id}', function(Request $request,$id) use ($app) {
+		    
+			return $app['twig']->render('/dashboard/addedit_success.html',array('addURL' => $app['url_generator']->generate('dashboard_page_addedit'),
+																				'editURL' => $app['url_generator']->generate('dashboard_page_addedit')."?edit=$id"));
+		
+		})->method('GET|POST')
+		  ->bind('dashboard_page_addedit_success')->value('id', null);  		  
+     
 		  
         return $controllers;
     }
