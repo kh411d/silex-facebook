@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: silex
 Target Host: localhost
 Target Database: silex
-Date: 7/10/2012 3:54:39 PM
+Date: 7/12/2012 3:55:26 PM
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -19,6 +19,19 @@ CREATE TABLE `slx_administrator` (
   PRIMARY KEY (`administrator_id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for slx_campaign_page
+-- ----------------------------
+CREATE TABLE `slx_campaign_page` (
+  `page_id` int(11) NOT NULL AUTO_INCREMENT,
+  `campaign_id` int(11) DEFAULT NULL,
+  `page_title` varchar(150) DEFAULT NULL,
+  `page_body` longtext,
+  `page_status` varchar(10) NOT NULL DEFAULT 'publish',
+  `page_publish_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`page_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for slx_campaigns
@@ -63,6 +76,7 @@ CREATE TABLE `slx_customer_items` (
   `summary` text NOT NULL,
   `status` varchar(20) NOT NULL,
   `campaign_id` int(11) NOT NULL,
+  `submitdate` datetime NOT NULL,
   PRIMARY KEY (`item_id`,`customer_id`,`campaign_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `slx_customer_items_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `slx_customer_fbrel` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -77,6 +91,7 @@ CREATE TABLE `slx_customer_profile` (
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `address` varchar(255) NOT NULL,
+  `regdate` datetime NOT NULL,
   PRIMARY KEY (`customer_id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -110,20 +125,9 @@ CREATE TABLE `slx_facebook_feed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Table structure for slx_pages
--- ----------------------------
-CREATE TABLE `slx_pages` (
-  `page_id` int(11) NOT NULL,
-  `campaign_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `summary` text,
-  `status` varchar(20) NOT NULL,
-  PRIMARY KEY (`page_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `slx_campaign_page` VALUES ('1', '1', 'testset', 'sefsefsefse', 'publish', '2007-01-01 00:00:00');
 INSERT INTO `slx_campaigns` VALUES ('1', 'Campaign uji coba', '2012-07-10 00:00:00', '2012-08-16 00:00:00', '2012-10-01 00:00:00', '2012-12-04 08:00:00', 'active');
 INSERT INTO `slx_campaigns` VALUES ('2', 'testset', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', 'pending');
 INSERT INTO `slx_campaigns` VALUES ('3', 'asdfasdaf', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', '2007-01-01 00:00:00', 'pending');
