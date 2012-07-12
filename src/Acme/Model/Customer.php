@@ -17,7 +17,7 @@ Class Customer {
   {
 	try{
 		$this->db->beginTransaction();
-		$sql = "INSERT INTO slx_customer_profile (`name`,`email`,`phone`,`address`) VALUES ('{$data['name']}','{$data['email']}','{$data['phone']}','{$data['address']}')";
+		$sql = "INSERT INTO slx_customer_profile (`name`,`email`,`phone`,`address`,`regdate`) VALUES ('{$data['name']}','{$data['email']}','{$data['phone']}','{$data['address']}','".date('Y-m-d H:i:s')."')";
 		$sth = $this->db->prepare($sql);
 		$sth->execute($data);
 		if($customer_id = $this->dbh->lastInsertId()){
@@ -37,16 +37,12 @@ Class Customer {
 	}
   }
   
-  public function addCampaign($data)
-  {
-	return $this->db->insert('slx_customer_campaigns',$data);
-  }
   
   public function isRegistered($fb_uid)
   {
    $sql  = "SELECT slx_customer_fbrel.customer_id ";
    $sql .= "FROM slx_customer_profile ";
-   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_fbrel. customer_id ";
    $sql .= "WHERE slx_customer_fbrel.fb_uid = ?";
    $customer_id = $conn->fetchColumn($sql, $fb_uid, 0);
 	return $customer_id;
@@ -93,7 +89,7 @@ Class Customer {
 	if(!is_array($clauses))
 	 parse_str($clauses,$clauses);
 
-	$defaults = array('orderby' => 'slx_customer_profile.customer_id', 'order' => 'DESC', 'fields' => '*');
+	$defaults = array('orderby' => 'slx_customer_profile.customer_id', 'order' => 'DESC', 'fields' => 'slx_customer_profile.*, slx_customer_fbrel.fb_uid');
 	$args = array_merge( $defaults, $args );
 	extract($args, EXTR_SKIP);
 	$order = ( 'desc' == strtolower($order) ) ? 'DESC' : 'ASC';
@@ -101,7 +97,7 @@ Class Customer {
 	$sql = "SELECT ";
 	$sql .= $fields." ";
 	$sql .= "FROM slx_customer_profile ";
-	$sql .= "INNER JOIN slx_customer_facebook ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+	$sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_fbrel. customer_id ";
 
 		foreach ($clauses as $key => $value){
 		  if(is_array($value) && count($value)==1){
@@ -129,7 +125,7 @@ Class Customer {
   {
    $sql  = "SELECT slx_customer_profile.*,slx_customer_fbrel.fb_uid ";
    $sql .= "FROM slx_customer_profile ";
-   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_facebook. customer_id "
+   $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_fbrel. customer_id ";
    $sql .= "WHERE slx_customer_profile.customer_id = ".$gid;
    return $this->db->fetchAssoc($sql);
   }

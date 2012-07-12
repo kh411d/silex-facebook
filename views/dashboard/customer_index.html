@@ -1,0 +1,38 @@
+{% set active = 'dashboard_customer' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Customer</h1>
+</div>
+	<div class="row">
+	<div class="span12">
+	<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Summary</th>
+	</tr>
+	{% set counter = 0 %}
+	{% for item in data %}
+	{% set counter = counter + 1 %}
+	<tr>
+	  <td>{{ counter }}
+	  </td>
+	  <td>
+	  <a href="http://www.facebook.com/profile.php?id={{ item.fb_uid }}" target="_blank">{{ item.name }}</a><br>
+	  {{ item.email }} <br>
+	  {{ item.phone }} <br>
+	  {{ item.address }} <br>
+	  Reg. {{ item.regdate|date("F jS g:ia") }}<br>
+	  </td>
+	</tr>
+	{% endfor %}
+	<tr>
+	<td colspan="3" style="text-align:center;">{{ paginate | raw }}</td>
+	</tr>
+	</table>
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

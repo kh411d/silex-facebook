@@ -1,0 +1,26 @@
+{% set active = 'dashboard_campaign' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Page</h1>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="{{ path('dashboard_page_addedit') }}">Add Page</a></li>
+    </ul>
+  </div>
+</div>
+
+	<div class="row">
+	<div class="span12">
+<form action="{{ path('dashboard_page_addedit') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

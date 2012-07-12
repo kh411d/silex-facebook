@@ -82,5 +82,10 @@ Class CustomerItem {
    return $this->db->fetchAssoc($sql);
   }
   
+  public function setStatus($gid,$status)
+  {
+   return $this->db->update('slx_customer_items', array('status'=>$status), array('item_id'=>$gid));
+  }
+  
 
 }

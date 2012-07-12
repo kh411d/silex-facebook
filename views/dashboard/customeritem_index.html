@@ -1,0 +1,39 @@
+{% set active = 'dashboard_customeritem' %}
+{% include 'dashboard/header.html' %} 
+
+ <div class="container">
+<div class="subhead" id="overview">
+  <h1>Customer Items</h1>
+</div>
+	<div class="row">
+	<div class="span12">
+	<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Summary</th>
+		<th>Action</th>
+	</tr>
+	{% set counter = 0 %}
+	{% for item in data %}
+	{% set counter = counter + 1 %}
+	<tr>
+	  <td>{{ counter }}
+	  </td>
+	  <td>
+	  {{ item.summary }}<br>
+	  On: {{ item.submitdate|date("F jS g:ia") }}
+	  </td>
+	  <td>
+	  <a class="btn" href="{{ path('dashboard_customeritem_home') }}?{% if (item.status == 'publish') %}publish{% else %}banned{% endif %}={{ item.campaign_id }}">{% if (item.status == 'publish') %} Publish {% else %} Banned {% endif %}</a>	  
+	  </td>
+	</tr>
+	{% endfor %}
+	<tr>
+	<td colspan="3" style="text-align:center;">{{ paginate | raw }}</td>
+	</tr>
+	</table>
+	</div>
+	</div>
+
+    </div> 
+{% include 'dashboard/footer.html' %}	

@@ -75,7 +75,8 @@ use Acme\Provider\Service\ModelServiceProvider;
 $app->register(new ModelServiceProvider(), array('model.models' => array(
     'customer'      => 'Acme\\Model\\Customer',
 	'customeritem'      => 'Acme\\Model\\CustomerItem',
-	'campaign'      => 'Acme\\Model\\Campaign'	
+	'campaign'      => 'Acme\\Model\\Campaign',
+	'page'			=> 'Acme\\Model\\Page'	
 )));
 
 /* Register Model */
