@@ -7,7 +7,7 @@ use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeControllerProvider implements ControllerProviderInterface
+class CampaignControllerProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {

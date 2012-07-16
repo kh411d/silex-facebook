@@ -90,10 +90,7 @@ $app->register(new HelperServiceProvider(), array('helper.helpers' => array(
 //$app->register(new EpiTemplateServiceProvider());
 
 /* Register Controller */
-$app->mount('/home', new Acme\Provider\Controller\HomeControllerProvider());
-
-
-$app->mount('/page', new Acme\Provider\Controller\PageControllerProvider());
+$app->mount('/campaign', new Acme\Provider\Controller\CampaignControllerProvider());
 $app->mount('/dashboard', new Acme\Provider\Controller\DashboardControllerProvider());
 
 $app->before(function() use ($app) {
