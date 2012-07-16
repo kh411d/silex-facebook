@@ -5,7 +5,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
- 
+ <!-- markItUp! -->
+<script type="text/javascript" src="{{ app.request.basepath }}/assets/js/markitup/jquery.markitup.js"></script>
+<!-- markItUp! toolbar settings -->
+<script type="text/javascript" src="{{ app.request.basepath }}/assets/js/markitup/sets/default/set.js"></script>
+<!-- markItUp! skin -->
+<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/assets/js/markitup/skins/markitup/style.css" />
+<!--  markItUp! toolbar skin -->
+<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/assets/js/markitup/sets/default/style.css" />
     <link href="{{ app.request.basepath }}/assets/css/bootstrap.css" rel="stylesheet">
         <style>
       body {
@@ -22,6 +29,15 @@
 	
 	<link href="{{ app.request.basepath }}/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="{{ app.request.basepath }}/assets/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function()  {
+  // Add markItUp! to your textarea in one line
+  // $('textarea').markItUp( { Settings }, { OptionalExtraSettings } );
+  $('textarea').markItUp(mySettings);
+  });
+</script>
+
 </head>
 <body>
 {% set active = active|default(null) %}

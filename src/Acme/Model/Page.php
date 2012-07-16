@@ -90,7 +90,7 @@ Class Page {
    $sql  = "SELECT slx_campaign_page.* ";
    $sql .= "FROM slx_campaign_page ";
    $sql .= "WHERE slx_campaign_page.page_id = ".$page_id;
-   return $this->db->fetchAssoc($sql,'ARRAY_A');
+   return $this->db->fetchAssoc($sql);
   }
   
   public function setStatus($page_id,$status)

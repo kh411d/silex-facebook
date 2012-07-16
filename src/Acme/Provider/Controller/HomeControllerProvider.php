@@ -14,39 +14,14 @@ class HomeControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 		
 		$controllers->match('/', function(Request $request) use ($app) {
-		    $data = array(
-        'name' => 'Your name',
-        'email' => 'Your email',
-    );
-		
-			$form = $app['form.factory']->createBuilder('form', $data)
-			->add('name')
-			->add('email')
-			->add('gender', 'choice', array(
-				'choices' => array(1 => 'male', 2 => 'female'),
-				'expanded' => true,
-			))
-			->getForm();
+		 
+		 //echo "<pre>"; 
+		 //var_dump($app['helper.facebook']->getAuthorizedUser());
+		 //var_dump($app['helper.facebook']->isAppUser(730189516));
+		 
+		 $auth_button = $app['helper.facebook']->authorizeButton();
 
-			if ('POST' == $request->getMethod()) {
-				$form->bindRequest($request);
-
-				if ($form->isValid()) {
-					$data = $form->getData();
-
-					// do something with the data
-
-					// redirect somewhere
-					return $app->redirect('...');
-				}
-			}
-			
-			//$app['epi.template']->display('home.php',array('customer'=>$app['customer']->get_all(),
-			//												'form'=>$form->createView())); 
-	// display the form
-	$customer = $app['customer']->get_all();
-
-    return $app['twig']->render('home.html', array('customer' => $customer,'form'=>$form->createView()));
+    	 return $app['twig']->render('home.html',array('auth_button' => $auth_button));
 		
 		})->method('GET|POST')
 		  ->bind('home');

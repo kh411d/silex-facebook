@@ -1,10 +1,4 @@
 {% include 'header.html' %}
 Home
-{{ customer.customer_id }}
-
-<form action="#" method="post">
-    {{ form_widget(form) }}
-
-    <input type="submit" name="submit" />
-</form>
+{{ auth_button | raw }}
 {% include 'footer.html' %}

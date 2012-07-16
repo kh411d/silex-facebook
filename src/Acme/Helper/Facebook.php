@@ -44,8 +44,7 @@ namespace Acme\Helper;
 */
  public    function feedCreate(Array $feed){
    if(!isset($feed['message']) || !isset($feed['link'])) return false;
-   $CI = &get_instance();
-   $CI->load->library('facebook');
+
    try {
    $this->facebook->api("me/feed","post",$feed);
    return true;
@@ -68,8 +67,7 @@ namespace Acme\Helper;
 
  
  public    function isFan(){
-   $CI = &get_instance();
-   $CI->load->library('facebook');
+
    $sr = $this->facebook->getSignedRequest();
    if(!$sr['page']['liked'])return false;
    return true;
@@ -216,11 +214,11 @@ namespace Acme\Helper;
  }
  
  public   function getAuthorizedUser($permissions = true){
-  $CI = &get_instance();
-  $CI->load->library('facebook');
+
   $profile = null;
+  if(!$this->facebook->getUser()) return null;
     try {
-		$profile = $this->facebook->api('/me?fields=id,name,email,birthday,link,first_name,last_name,username,gender');
+		$profile = $this->facebook->api('/me?fields=id,name,birthday,link,first_name,last_name,username,gender');
 		if(isset($profile['birthday'])){
 			$birthday_date = DateTime::createFromFormat('m/d/Y', $profile['birthday']);
 			$now_date = new DateTime(date('Y-m-d'));
