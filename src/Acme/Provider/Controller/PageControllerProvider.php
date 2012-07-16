@@ -13,10 +13,16 @@ class PageControllerProvider implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 		
-		$controllers->match('/{id}', function(Request $request) use ($app) {
+		$controllers->match('/{id}', function(Request $request,$id) use ($app) {
+		  
+		  if($page = $app['page']->getById($id)){
+		  	return $app['twig']->render('page.html',array('page' => $page));
+		  }else{
+		  	$app->abort(404, "Page does not exist.");
+		  } 
 		
 		})->method('GET|POST')
-		  ->bind('home');
+		  ->bind('page');
 
         return $controllers;
     }

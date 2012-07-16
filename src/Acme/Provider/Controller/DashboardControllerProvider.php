@@ -27,7 +27,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		
 		/* Campaign Index */
 		
-		$controllers->match('/campaign', function(Request $request) use ($app) {
+		$controllers->match('/campaign/', function(Request $request) use ($app) {
 		     $campaign = $app['campaign'];
 			//Action
 			if($cid = $app['request']->query->get('activate')){
@@ -47,6 +47,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
 			
 			 $perPage = 2;   
 			 $path = $app['url_generator']->generate('dashboard_campaign_home');
+
 			 extract(\pagination($total_items,$perPage,$filter_vars,$path));	
 
 			//Set Params
@@ -136,7 +137,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		
 		
 		
-		$controllers->match('/customer', function(Request $request) use ($app) {
+		$controllers->match('/customer/', function(Request $request) use ($app) {
 		     $campaign = $app['campaign'];
 			 $customer = $app['customer'];
 			
@@ -163,7 +164,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		})->method('GET|POST')
 		  ->bind('dashboard_customer_home');  
 		  
-		$controllers->match('/customeritem', function(Request $request) use ($app) {
+		$controllers->match('/customeritem/', function(Request $request) use ($app) {
 		     $campaign = $app['campaign'];
 			 $customerItem = $app['customeritem'];
 			
@@ -205,7 +206,7 @@ class DashboardControllerProvider implements ControllerProviderInterface
 		})->method('GET|POST')
 		  ->bind('dashboard_page_addedit_success')->value('id', null);  		  
 
-		$controllers->match('/page', function(Request $request) use ($app) {
+		$controllers->match('/page/', function(Request $request) use ($app) {
 		     $campaign = $app['campaign'];
 			 $page = $app['page'];
 			

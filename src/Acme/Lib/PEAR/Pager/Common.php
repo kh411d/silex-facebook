@@ -46,7 +46,8 @@ if (substr($_SERVER['PHP_SELF'], -1) == '/') {
     define('PAGER_CURRENT_FILENAME', '');
     define('PAGER_CURRENT_PATHNAME', $http.$_SERVER['HTTP_HOST'].str_replace('\\', '/', $_SERVER['PHP_SELF']));
 } else {
-    define('PAGER_CURRENT_FILENAME', preg_replace('/(.*)\?.*/', '\\1', basename($_SERVER['PHP_SELF'])));
+    define('PAGER_CURRENT_FILENAME', ''); 
+    //define('PAGER_CURRENT_FILENAME', preg_replace('/(.*)\?.*/', '\\1', basename($_SERVER['PHP_SELF'])));
     define('PAGER_CURRENT_PATHNAME', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 }
 /**

@@ -7,19 +7,87 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/Acme/Provider/Controller/HomeControllerProvider.php",
+			"settings":
+			{
+				"buffer_size": 899,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Acme/Helper/Facebook.php",
+			"settings":
+			{
+				"buffer_size": 7643,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/home.html",
+			"settings":
+			{
+				"buffer_size": 84,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Acme/Provider/Controller/PageControllerProvider.php",
+			"settings":
+			{
+				"buffer_size": 752,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 3500,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/page.html",
+			"settings":
+			{
+				"buffer_size": 87,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Acme/Model/Campaign.php",
+			"settings":
+			{
+				"buffer_size": 4445,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/Acme/Provider/Controller/DashboardControllerProvider.php",
+			"settings":
+			{
+				"buffer_size": 12082,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
 		],
-		"width": 0.0
+		"width": 512.0
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 125.0
 	},
 	"distraction_free":
 	{
@@ -32,10 +100,21 @@
 	},
 	"file_history":
 	[
+		"/D/xampp/htdocs/silex/src/Acme/Provider/Controller/DashboardControllerProvider.php",
+		"/D/xampp/htdocs/silex/src/Acme/Model/Customer.php",
+		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager.php",
+		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager/Common.php",
+		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager/Pager.php",
+		"/C/Documents and Settings/Web Developer/Application Data/Sublime Text 2/Packages/FTPSync/ftpsync.sublime-settings",
+		"/D/xampp/htdocs/silex/views/page.html",
+		"/D/xampp/htdocs/silex/src/Acme/Model/Page.php",
+		"/D/xampp/htdocs/silex/views/dashboard/header.html",
+		"/D/xampp/htdocs/silex/views/header.html",
+		"/D/xampp/htdocs/silex/views/home.html"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -49,6 +128,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"$this->_fileName",
+			"PAGER_CURRENT_FILENAME",
+			"this->_path",
+			"this->_filename",
+			"path",
+			"_allowed_options",
+			"path",
+			"get_instance"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -66,8 +153,218 @@
 	"groups":
 	[
 		{
+			"selected": 6,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/Acme/Provider/Controller/HomeControllerProvider.php",
+					"settings":
+					{
+						"buffer_size": 899,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								404,
+								404
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/Acme/Helper/Facebook.php",
+					"settings":
+					{
+						"buffer_size": 7643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7008,
+								7023
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3015.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "views/home.html",
+					"settings":
+					{
+						"buffer_size": 84,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								84,
+								84
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/Acme/Provider/Controller/PageControllerProvider.php",
+					"settings":
+					{
+						"buffer_size": 752,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								715,
+								715
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "index.php",
+					"settings":
+					{
+						"buffer_size": 3500,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1305,
+								1305
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "views/page.html",
+					"settings":
+					{
+						"buffer_size": 87,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/Acme/Model/Campaign.php",
+					"settings":
+					{
+						"buffer_size": 4445,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1744,
+								1744
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/Acme/Provider/Controller/DashboardControllerProvider.php",
+					"settings":
+					{
+						"buffer_size": 12082,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1064,
+								1064
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -127,6 +424,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 292.0,
 	"status_bar_visible": true
 }

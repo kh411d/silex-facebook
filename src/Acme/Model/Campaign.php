@@ -23,9 +23,64 @@ Class Campaign {
 			  ORDER BY startdate DESC 
 			  LIMIT 1";
 						  
-		$q = $this->db->fetchAssoc($sql);						  
+		$q = $this->db->fetchAssoc($sql);		
+		$q = array_merge($q,$this->getStatus($q));				  
 	    return 	$q ? $q : null;
   }
+
+  /**
+ *
+ *  SETUP STATUS OF CAMPAIGN
+ *   
+ *                 _____________ON_PROGRESS__________________________
+ *   ___ON_WAIT___                                                    ___IS_OFF___
+ *   
+ *   -------------|---------------|------------------|---------------|------------
+ *              Start            Upload             Judging          End
+ *                               End                Time
+ *             
+ *                ___ON_UPLOAD____
+ *                ______________ON_VOTE______________
+ *				                                    ___ON_JUDGING___
+ *
+ **/
+ 
+  public function getStatus($data)
+  {
+	  $o_nowdate = new \DateTime(date("Y-m-d H:i:s")); 
+	  $nowTime = $o_nowdate->getTimestamp();
+	  
+	  $o_startdate = new \DateTime($data['startdate']); 
+	  $startTime = $o_startdate->getTimestamp();
+	  
+	  $o_upload_enddate = new \DateTime($data['upload_enddate']); 
+	  $uploadEndTime = $o_upload_enddate->getTimestamp();
+	  
+	  $o_judging = new \DateTime($data['selectiondate']); 
+	  $judgingTime = $o_judging->getTimestamp();
+	  
+	  $o_enddate = new \DateTime($data['enddate']); 
+	  $endTime = $o_enddate->getTimestamp();
+	  
+	  if($nowTime < $startTime){
+		$status = $this->setOnStatus(true,false,false,false,false,false);
+	  }elseif($nowTime >= $startTime && $nowTime < $uploadEndTime){
+	    $status = $this->setOnStatus(false,true,true,true,false,false);
+	  }elseif($nowTime >= $uploadEndTime && $nowTime < $judgingTime){
+	    $status = $this->setOnStatus(false,true,false,true,false,false);
+	  }elseif($nowTime >= $judgingTime && $nowTime < $endTime){
+	    $status = $this->setOnStatus(false,true,false,false,true,false);
+	  }else{
+	    $status = $this->setOnStatus(false,false,false,false,false,true);
+	  }
+	  
+	  return $status;
+  }
+
+  public function setOnStatus($on_wait = false,$on_progress = false,$on_upload = false,$on_vote = false,$on_judging = false,$is_off = true){
+	return compact('on_wait','on_progress','on_upload','on_vote','on_judging','is_off');
+  }
+  
 
   public function add($data)
   {

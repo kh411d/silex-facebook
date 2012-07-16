@@ -14,8 +14,9 @@ class HomeControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 		
 		$controllers->match('/', function(Request $request) use ($app) {
+		 echo "<pre>"; 
+		 var_dump($app['campaign']->current());
 		 
-		 //echo "<pre>"; 
 		 //var_dump($app['helper.facebook']->getAuthorizedUser());
 		 //var_dump($app['helper.facebook']->isAppUser(730189516));
 		 

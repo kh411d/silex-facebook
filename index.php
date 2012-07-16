@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormError;
 $app = new Silex\Application();
 $app['debug'] = true;
 
-	function pagination($total_items,$perPage,array $extraVars = array(),$path = '',$urlVar = 'pageID')
+	function pagination($total_items,$perPage,array $extraVars = array(),$path = '',$filename = '',$urlVar = 'pageID')
 	{
 		//Pagination Setup
 		require_once "Pager/Sliding.php";
@@ -29,6 +29,7 @@ $app['debug'] = true;
 										 'perPage'=>$perPage,
 										 'urlVar'=>$urlVar,
 										 'extraVars'=>$extraVars,
+										 'fileName'=>$filename,
 										 'path'=>$path));
 		list($offset,) = $pager->getOffsetByPageId();	
 		--$offset; //Need to Decrement
@@ -90,6 +91,9 @@ $app->register(new HelperServiceProvider(), array('helper.helpers' => array(
 
 /* Register Controller */
 $app->mount('/home', new Acme\Provider\Controller\HomeControllerProvider());
+
+
+$app->mount('/page', new Acme\Provider\Controller\PageControllerProvider());
 $app->mount('/dashboard', new Acme\Provider\Controller\DashboardControllerProvider());
 
 $app->before(function() use ($app) {

@@ -1,0 +1,7 @@
+{% include 'header.html' %}
+Upload
+<form action="{{ path('upload') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+{% include 'footer.html' %}
