@@ -8,34 +8,21 @@
 	"buffers":
 	[
 		{
-			"file": "src/Acme/Provider/Controller/HomeControllerProvider.php",
+			"contents": "<?php\nnamespace Acme\\Provider\\Controller;\n\nuse Silex\\Application;\nuse Silex\\ControllerProviderInterface;\nuse Silex\\ControllerCollection;\nuse Symfony\\Component\\HttpFoundation\\Request;\nuse Symfony\\Component\\HttpFoundation\\Response;\n\nclass CampaignControllerProvider implements ControllerProviderInterface\n{\n    public function connect(Application $app)\n    {\n        $controllers = $app['controllers_factory'];\n		\n		$controllers->match('/', function(Request $request) use ($app) {\n		 \n		$user = $app['helper.facebook']->getAuthorizedUser(true);\n\n		$isAuthorized = $user ? true : false;\n\n		if(!$campaign = $app['campaign']->current()){\n			$app->abort(404, \"Page does not exist.\");\n		}\n\n\n		 echo \"<pre>\"; \n		 var_dump($app['campaign']->current());\n		 \n		 //var_dump($app['helper.facebook']->getAuthorizedUser());\n		 //var_dump($app['helper.facebook']->isAppUser(730189516));\n		 \n		 $auth_button = $app['helper.facebook']->authorizeButton();\n\n    	 return $app['twig']->render('home.html',array('auth_button' => $auth_button));\n		\n		})->method('GET|POST')\n		  ->bind('home');\n\n        return $controllers;\n    }\n}",
+			"file": "src/Acme/Provider/Controller/CampaignControllerProvider.php",
+			"file_size": 934,
+			"file_write_time": 129869176523281250,
 			"settings":
 			{
-				"buffer_size": 899,
+				"buffer_size": 1108,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/Acme/Helper/Facebook.php",
+			"file": "src/Acme/Provider/Controller/cicontroller.php",
 			"settings":
 			{
-				"buffer_size": 7643,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "views/home.html",
-			"settings":
-			{
-				"buffer_size": 84,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/Acme/Provider/Controller/PageControllerProvider.php",
-			"settings":
-			{
-				"buffer_size": 752,
+				"buffer_size": 18784,
 				"line_ending": "Windows"
 			}
 		},
@@ -43,31 +30,15 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 3500,
+				"buffer_size": 3429,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "views/page.html",
+			"file": "views/fanlike.html",
 			"settings":
 			{
-				"buffer_size": 87,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/Acme/Model/Campaign.php",
-			"settings":
-			{
-				"buffer_size": 4445,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Acme/Provider/Controller/DashboardControllerProvider.php",
-			"settings":
-			{
-				"buffer_size": 12082,
+				"buffer_size": 65,
 				"line_ending": "Windows"
 			}
 		}
@@ -79,11 +50,15 @@
 		"selected_items":
 		[
 			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
 				"pac",
 				"Package Control: Install Package"
 			]
 		],
-		"width": 512.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -100,17 +75,30 @@
 	},
 	"file_history":
 	[
+		"/D/xampp/htdocs/silex/src/Acme/Provider/Controller/HomeControllerProvider.php",
+		"/D/xampp/htdocs/silex/views/gallery.html",
+		"/D/xampp/htdocs/silex/views/gallery_detail.html",
+		"/D/xampp/htdocs/silex/views/upload.html",
+		"/D/xampp/htdocs/silex/views/page.html",
+		"/D/xampp/htdocs/silex/views/register.html",
+		"/D/xampp/htdocs/silex/src/Acme/Helper/Facebook.php",
+		"/D/xampp/htdocs/silex/views/home.html",
+		"/D/xampp/htdocs/silex/src/Acme/Provider/Controller/PageControllerProvider.php",
+		"/D/xampp/htdocs/silex/index.php",
+		"/D/xampp/htdocs/silex/src/Acme/Model/Campaign.php",
 		"/D/xampp/htdocs/silex/src/Acme/Provider/Controller/DashboardControllerProvider.php",
+		"/D/xampp/htdocs/silex/views/authorize.html",
+		"/D/xampp/htdocs/silex/views/notification.html",
+		"/C/Documents and Settings/Web Developer/Application Data/Sublime Text 2/Packages/Terminal/Default (Windows).sublime-keymap",
+		"/C/Documents and Settings/Web Developer/Application Data/Sublime Text 2/Packages/FTPSync/ftpsync.sublime-settings",
+		"/C/Documents and Settings/Web Developer/Application Data/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/D/xampp/htdocs/silex/src/Acme/Model/Customer.php",
 		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager.php",
 		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager/Common.php",
 		"/D/xampp/htdocs/silex/src/Acme/Lib/PEAR/Pager/Pager.php",
-		"/C/Documents and Settings/Web Developer/Application Data/Sublime Text 2/Packages/FTPSync/ftpsync.sublime-settings",
-		"/D/xampp/htdocs/silex/views/page.html",
 		"/D/xampp/htdocs/silex/src/Acme/Model/Page.php",
 		"/D/xampp/htdocs/silex/views/dashboard/header.html",
-		"/D/xampp/htdocs/silex/views/header.html",
-		"/D/xampp/htdocs/silex/views/home.html"
+		"/D/xampp/htdocs/silex/views/header.html"
 	],
 	"find":
 	{
@@ -153,23 +141,23 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/Acme/Provider/Controller/HomeControllerProvider.php",
+					"file": "src/Acme/Provider/Controller/CampaignControllerProvider.php",
 					"settings":
 					{
-						"buffer_size": 899,
+						"buffer_size": 1108,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								404,
-								404
+								411,
+								411
 							]
 						],
 						"settings":
@@ -184,180 +172,76 @@
 				},
 				{
 					"buffer": 1,
-					"file": "src/Acme/Helper/Facebook.php",
+					"file": "src/Acme/Provider/Controller/cicontroller.php",
 					"settings":
 					{
-						"buffer_size": 7643,
+						"buffer_size": 18784,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7008,
-								7023
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 3015.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "views/home.html",
-					"settings":
-					{
-						"buffer_size": 84,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								84,
-								84
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/Acme/Provider/Controller/PageControllerProvider.php",
-					"settings":
-					{
-						"buffer_size": 752,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								715,
-								715
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "index.php",
-					"settings":
-					{
-						"buffer_size": 3500,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1305,
-								1305
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "views/page.html",
-					"settings":
-					{
-						"buffer_size": 87,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								87,
-								87
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/Acme/Model/Campaign.php",
-					"settings":
-					{
-						"buffer_size": 4445,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1744,
-								1744
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 495.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "src/Acme/Provider/Controller/DashboardControllerProvider.php",
-					"settings":
-					{
-						"buffer_size": 12082,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1064,
-								1064
+								1959,
+								1959
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.php",
+					"settings":
+					{
+						"buffer_size": 3429,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3230,
+								3230
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "views/fanlike.html",
+					"settings":
+					{
+						"buffer_size": 65,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								65,
+								65
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -374,7 +258,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{

@@ -121,12 +121,16 @@ Class Customer {
 
 	}
   
-  public function getById($gid) 
+  public function getById($gid,$getBy = 'cid') 
   {
    $sql  = "SELECT slx_customer_profile.*,slx_customer_fbrel.fb_uid ";
    $sql .= "FROM slx_customer_profile ";
    $sql .= "INNER JOIN slx_customer_fbrel ON slx_customer_profile.customer_id = slx_customer_fbrel. customer_id ";
-   $sql .= "WHERE slx_customer_profile.customer_id = ".$gid;
+   if($getBy == 'cid')
+	$sql .= "WHERE slx_customer_profile.customer_id = ".$gid;
+   elseif($getBy == 'fbuid')
+    $sql .= "WHERE slx_customer_fbrel.fb_uid = ".$gid;
+	
    return $this->db->fetchAssoc($sql);
   }
   

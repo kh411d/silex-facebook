@@ -89,7 +89,7 @@ class CampaignControllerProvider implements ControllerProviderInterface
 						'label'		  => 'Email'
 					))
 					->add('address', 'textarea', array(
-						'attr'        => array('placeholder' => 'isi alamant'),
+						'attr'        => array('placeholder' => 'isi alamat'),
 						'label'		  => 'Alamat'
 					))
 					->add('phone', 'text', array(
@@ -157,19 +157,44 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		 if(!$app['customer']->isRegistered($user['id'])){
 		 	return $app->redirect($app['url_generator']->generate('register'));
 		 }
+		 
+		 //Form Builder
+		 $builder = $app['form.factory']->createBuilder('form',$data_default);
+			$form = $builder
+					->add('summary', 'textarea', array(
+						'attr'        => array('placeholder' => 'Fill your shout!'),
+						'label'		  => 'Your Shout'
+					))
+					->getForm();
+    	 
+		if ('POST' === $app['request']->getMethod()) {
+				$form->bindRequest($app['request']);
+				if ($form->isValid()) {
+					 $values = $form->getData();
+					 $values['submitdate'] = \date('Y-m-d H:i:s');
+					 $values['campaign_id'] = $campaign['campaign_id'];
+					 $values['customer_id'] = $app['customer']->getById($user['id'],'fbuid');
+					 $result = $app['customeritem']->add($values);
+					 
+					return $app->redirect($app['url_generator']->generate('upload'));
+				} else {
+					$form->addError(new FormError('Maaf, silahkan coba kembali.'));
+					return $app->redirect($app['url_generator']->generate('upload'));
+				}
+		}
 
     	 
     	 return $app['twig']->render('upload.html',array());
 		
 		})->method('GET|POST')
-		  ->bind('');
+		  ->bind('upload');
 		/**/  
 
 
 
         /** xxx **
 
-		$controllers->match('', function(Request $request) use ($app) {
+		$controllers->match('/', function(Request $request) use ($app) {
 		
     	 
     	 return $app['twig']->render('.html',array());
