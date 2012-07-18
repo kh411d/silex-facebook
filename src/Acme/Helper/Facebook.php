@@ -218,7 +218,7 @@ namespace Acme\Helper;
   $profile = null;
   if(!$this->facebook->getUser()) return null;
     try {
-		$profile = $this->facebook->api('/me?fields=id,name,birthday,link,first_name,last_name,username,gender');
+		$profile = $this->facebook->api('/me?fields=id,name,email,link,first_name,last_name,username,gender');
 		if(isset($profile['birthday'])){
 			$birthday_date = DateTime::createFromFormat('m/d/Y', $profile['birthday']);
 			$now_date = new DateTime(date('Y-m-d'));

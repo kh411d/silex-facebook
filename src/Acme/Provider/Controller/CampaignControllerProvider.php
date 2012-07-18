@@ -6,6 +6,8 @@ use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormError;
 
 class CampaignControllerProvider implements ControllerProviderInterface
 {
@@ -16,8 +18,8 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		/** Home **/
 
 		$controllers->match('/', function(Request $request) use ($app) {
-		 echo "<pre>"; 
-		 var_dump($app['campaign']->current());
+		// echo "<pre>"; 
+		 //var_dump($app['campaign']->current());
 		 
 		 //var_dump($app['helper.facebook']->getAuthorizedUser());
 		 //var_dump($app['helper.facebook']->isAppUser(730189516));
@@ -48,6 +50,9 @@ class CampaignControllerProvider implements ControllerProviderInterface
 
 		$controllers->match('/register', function(Request $request) use ($app) {
 		
+		
+		
+		
 		//Validation
 		if(!$campaign = $app['campaign']->current()){
 			$app->abort(404,"Page does not exists.");
@@ -67,7 +72,7 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		 	return $app->redirect($app['url_generator']->generate('authorize').'?ref='.$redirect_url);
 		 }
 		 
-		 if(!$isFan = $app['helper.facebook']->user_isFan()){
+		 if(!$isFan = $app['helper.facebook']->user_isFan($app['facebook.page_id'])){
 		 	return $app->redirect($app['url_generator']->generate('likepage').'?ref='.$redirect_url);
 		 }
 		 
@@ -76,6 +81,8 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		 }
 
 	 	//Form Builder
+		$data_default = array('name'=>$user['name'],
+							  'email'=>$user['email']);	
 		 $builder = $app['form.factory']->createBuilder('form',$data_default);
 			$form = $builder
 					->add('name', 'text', array(
@@ -106,8 +113,11 @@ class CampaignControllerProvider implements ControllerProviderInterface
 					 $values['regdate'] = \date('Y-m-d H:i:s');
 					 $values['fb_uid'] = $user['id'];
 					 $result = $app['customer']->add($values);
-					 
-					return $app->redirect($app['url_generator']->generate('upload'));
+					
+					$app['session']->set('notification', array('title' => 'Registration Succeed',
+															   'text' => 'Thanks for Joining!'));
+
+					return $app->redirect($app['url_generator']->generate('notice'));
 				} else {
 					$form->addError(new FormError('Maaf, silahkan coba kembali.'));
 					return $app->redirect($app['url_generator']->generate('register'));
@@ -150,7 +160,7 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		 	return $app->redirect($app['url_generator']->generate('authorize').'?ref='.$redirect_url);
 		 }
 		 
-		 if(!$isFan = $app['helper.facebook']->user_isFan()){
+		 if(!$isFan = $app['helper.facebook']->user_isFan($app['facebook.page_id'])){
 		 	return $app->redirect($app['url_generator']->generate('likepage').'?ref='.$redirect_url);
 		 }
 		 
@@ -159,7 +169,7 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		 }
 		 
 		 //Form Builder
-		 $builder = $app['form.factory']->createBuilder('form',$data_default);
+		 $builder = $app['form.factory']->createBuilder('form');
 			$form = $builder
 					->add('summary', 'textarea', array(
 						'attr'        => array('placeholder' => 'Fill your shout!'),
@@ -173,10 +183,15 @@ class CampaignControllerProvider implements ControllerProviderInterface
 					 $values = $form->getData();
 					 $values['submitdate'] = \date('Y-m-d H:i:s');
 					 $values['campaign_id'] = $campaign['campaign_id'];
-					 $values['customer_id'] = $app['customer']->getById($user['id'],'fbuid');
+					 $customer = $app['customer']->getById($user['id'],'fbuid');
+					 $values['customer_id'] = $customer['customer_id'];
 					 $result = $app['customeritem']->add($values);
-					 
-					return $app->redirect($app['url_generator']->generate('upload'));
+					
+					$app['session']->set('notification', array('title' => 'Submission Succeed',
+															   'text' => 'Thanks for the shout!'));
+
+					return $app->redirect($app['url_generator']->generate('notice'));
+
 				} else {
 					$form->addError(new FormError('Maaf, silahkan coba kembali.'));
 					return $app->redirect($app['url_generator']->generate('upload'));
@@ -184,7 +199,7 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		}
 
     	 
-    	 return $app['twig']->render('upload.html',array());
+    	 return $app['twig']->render('upload.html',array('form'=>$form->createView()));
 		
 		})->method('GET|POST')
 		  ->bind('upload');
@@ -192,18 +207,48 @@ class CampaignControllerProvider implements ControllerProviderInterface
 
 
 
-        /** xxx **
+        /** Notificate **/
 
-		$controllers->match('/', function(Request $request) use ($app) {
+		$controllers->match('/notice', function(Request $request) use ($app) {
 		
-    	 
-    	 return $app['twig']->render('.html',array());
+    	 //Lorem ipsum lagi deh ih cape deh
+    	 $note = $app['session']->get('notification');
+    	 //print_r($note);
+    	 //exit;
+    	 return $app['twig']->render('notification.html',array('text'=>$note));
 		
 		})->method('GET|POST')
-		  ->bind('');
+		  ->bind('notice');
 		/**/  
 
 
+
+        /** Gallery **/
+
+		$controllers->match('/gallery/{type}', function(Request $request,$type) use ($app) {
+		 if(!$campaign = $app['campaign']->current()){
+			$app->abort(404,"Page does not exists.");
+		}
+		
+		 $pageNum = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+		$rowsPerPage = 2; // number of records to show
+		$offset = ($pageNum - 1) * $rowsPerPage;
+		 
+		 
+		 $items = $app['customeritem']->retrieve(array('campaign_id'=>$campaign['campaign_id']),
+    	 										 array('limit_number'=>$rowsPerPage,'limit_offset'=>$offset));
+    	 if($type == 'home'){
+    	 	return $app['twig']->render('gallery.html',array('items'=>$items));
+		 }elseif($type=='ajx'){
+		 	foreach($items as $item){
+		 		echo "<li>{$item['summary']}</li>";
+		 	}
+
+		 }
+		})->method('GET|POST')
+		  ->bind('gallery');
+
+		/**/  		
 
         /** xxx **
 
@@ -217,29 +262,6 @@ class CampaignControllerProvider implements ControllerProviderInterface
 		/**/  
 
 
-        /** xxx **
-
-		$controllers->match('', function(Request $request) use ($app) {
-		
-    	 
-    	 return $app['twig']->render('.html',array());
-		
-		})->method('GET|POST')
-		  ->bind('');
-		/**/  
-
-
-
-        /** xxx **
-
-		$controllers->match('', function(Request $request) use ($app) {
-		
-    	 
-    	 return $app['twig']->render('.html',array());
-		
-		})->method('GET|POST')
-		  ->bind('');
-		/**/  
 
 
         return $controllers;

@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#"  xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     <title>Silex Facebook</title>
+    	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
      <script>
     var APP_APPLICATION_ID = '{{ app["facebook.app_id"] }}';
 	var APP_EXT_PERMISSIONS = '{{ app["facebook.permissions"] }}';
@@ -223,3 +224,12 @@
     }());
 </script>	
 <!-- END - ASYNC JS SDK LOAD -->
+<style>.nav li{float:left;display:block;padding:10px;}</style>
+<ul class="nav">
+              <li><a href="{{ path('home') }}">Home</a></li>
+              <li><a href="{{ path('register') }}">Register</a></li>
+              <li><a href="{{ path('page',{'id':'1'}) }}">Page</a></li>
+              <li><a href="{{ path('upload') }}">Upload</a></li>
+           	  <li><a href="{{ path('gallery',{'type':'home'}) }}">Gallery</a></li>	
+			  <li><a href="#">Logout</a></li>
+            </ul><Br/><br/>

@@ -24,7 +24,7 @@
 	  On: {{ item.submitdate|date("F jS g:ia") }}
 	  </td>
 	  <td>
-	  <a class="btn" href="{{ path('dashboard_customeritem_home') }}?{% if (item.status == 'publish') %}publish{% else %}banned{% endif %}={{ item.campaign_id }}">{% if (item.status == 'publish') %} Publish {% else %} Banned {% endif %}</a>	  
+	  <a class="btn" href="{{ path('dashboard_customeritem_home') }}?{% if (item.status == 'publish') %}banned{% else %}publish{% endif %}={{ item.campaign_id }}">{% if (item.status == 'publish') %} Ban this! {% else %} Publish {% endif %}</a>	  
 	  </td>
 	</tr>
 	{% endfor %}

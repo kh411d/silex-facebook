@@ -1,4 +1,43 @@
 {% include 'header.html' %}
+
+<script>
+$(document).ready(function() {//When the dom is ready
+		$('.load_more').on("click",function() { //When user clicks
+			var last_msg_id = $(this).attr("id");//Get the id from the hyperlink
+			if(last_msg_id!='end'){ //if not all post has been loaded yet
+				var nextpage = parseInt(last_msg_id) + 1;
+				$.ajax({//fetch the article via ajax
+					type: "POST",
+					url: "{{ path('gallery',{'type':'ajx'}) }}",//calling this page
+					data: "page="+ nextpage,
+					beforeSend: function() { // add the loadng image
+									$('a.load_more').append('Loading ...');
+					 			},
+					success: function(html){
+						$(".load_more").attr("id",nextpage);
+						$("ol#updates").append(html);//output the server response into ol#updates
+					}
+				});
+			 }
+			return false;
+		});
+});
+</script>
 Gallery
+
+
+
+<div id='container'>
+
+
+ <ol id="updates">
+{% for item in items %}
+ <li> {{ item.summary }} </li>
+{% endfor %}
+ </ol>
+
+ <a id="1" href="#" class="load_more" >Show Older Posts  </a>
+</div>
+
 
 {% include 'footer.html' %}

@@ -14,6 +14,7 @@ $app['debug'] = true;
 $app['facebook.app_id'] = '319158791508303';
 $app['facebook.secret'] = '1babbcac1b0097cf4cfba191e969b91d';
 $app['facebook.permissions'] = 'publish_stream,email';
+$app['facebook.page_id'] = '118231924861195';
 
 //EpiTemplate
 $app['epi.template.path'] = __DIR__ . '/../views';
